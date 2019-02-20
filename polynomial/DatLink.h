@@ -6,12 +6,12 @@ using namespace std;
 class TDatLink
 {
 	TMonom mon;
-	TDatLink* next;
+	TDatLink * next;
 public:
-	TDatLink (TDatLink * pN , TMonom &m);
-	TDatLink * GetNex(); 
-	void SetNext(TDatLink * pN);
-	TMonom GetMonom();
+	TDatLink(TDatLink * n, TMonom & m);
+	TDatLink * GetNext();
+	TMonom * GetMonom();
+	void SetNext(TDatLink * n);
 	void SetMonom(TMonom & m);
+	void SetCoefMonom(int c);
 };
-

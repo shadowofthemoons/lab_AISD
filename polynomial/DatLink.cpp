@@ -1,29 +1,34 @@
 #include "DatLink.h"
+#include <iostream>
+using namespace std;
 
-
-
-TDatLink::TDatLink(TDatLink * pN , TMonom &m)
+TDatLink::TDatLink(TDatLink * n, TMonom & m)
 {
-	next = pN;
+	next = n;
 	mon = m;
 }
 
-TDatLink * TDatLink::GetNex()
+TDatLink * TDatLink::GetNext()
 {
 	return next;
 }
 
-void TDatLink::SetNext(TDatLink * pN)
+void TDatLink::SetNext(TDatLink * n)
 {
-	next = pN;
+	next = n;
 }
 
-TMonom TDatLink::GetMonom()
+TMonom * TDatLink::GetMonom()
 {
-	return mon;
+	return &mon;
 }
 
 void TDatLink::SetMonom(TMonom & m)
 {
 	mon = m;
+}
+
+void TDatLink::SetCoefMonom(int c)
+{
+	mon.SetCoeff(c);
 }
