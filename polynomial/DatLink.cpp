@@ -1,8 +1,6 @@
 #include "DatLink.h"
-#include <iostream>
-using namespace std;
 
-TDatLink::TDatLink(TDatLink * n, TMonom & m)
+TDatLink::TDatLink(TDatLink * n, const TMonom & m)
 {
 	next = n;
 	mon = m;
@@ -23,12 +21,7 @@ TMonom * TDatLink::GetMonom()
 	return &mon;
 }
 
-void TDatLink::SetMonom(TMonom & m)
+void TDatLink::SetMonom(const TMonom & m)
 {
 	mon = m;
-}
-
-void TDatLink::SetCoefMonom(int c)
-{
-	mon.SetCoeff(c);
 }

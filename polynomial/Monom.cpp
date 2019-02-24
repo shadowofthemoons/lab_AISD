@@ -1,6 +1,4 @@
 #include "Monom.h"
-#include <iostream>
-using namespace std;
 
 TMonom::TMonom(int cval, int pval)
 {
@@ -13,14 +11,14 @@ void TMonom::SetCoeff(int cval)
 	coeff = cval;
 }
 
-int TMonom::GetCoeff(void)
-{
-	return coeff;
-}
-
 void TMonom::SetPower(int pval)
 {
 	power = pval;
+}
+
+int TMonom::GetCoeff(void)
+{
+	return coeff;
 }
 
 int TMonom::GetPower(void)
@@ -52,7 +50,20 @@ int TMonom:: operator == (const TMonom &tm)
 
 ostream & operator << (ostream & out, TMonom &m)
 {
-	out << m.GetCoeff() << "  " << m.GetPower() << endl;
+	out.width(2);
+	out << m.GetCoeff();
+	if (m.GetPower() / 100 != 0)
+	{
+		out << "x^" << m.GetPower() / 100;
+	}
+	if ((m.GetPower() / 10) % 10 != 0)
+	{
+		out << "y^" << (m.GetPower() / 10) % 10;
+	}
+	if (m.GetPower() % 10 != 0)
+	{
+		out << "z^" << m.GetPower() % 10;
+	}
 	return out;
 }
 
@@ -60,7 +71,22 @@ istream & operator >> (istream & in, TMonom &m)
 {
 	int c, p;
 	in >> c >> p;
+	while (c == 0 || ((p > 999 || p < 0) && p != -1))
+	{
+		if (c == 0)
+		{
+			cout << "  У монома не может быть нулевой коэффициент,";
+		}
+		if ((p > 999 || p < 1) && p != -1)
+		{
+			cout << "  Неверная свернутая степень,";
+		}
+		cout << " введите еще раз " << endl;
+		cout << "  ";
+		in >> c >> p;
+	}
 	m.SetCoeff(c);
 	m.SetPower(p);
 	return in;
 }
+

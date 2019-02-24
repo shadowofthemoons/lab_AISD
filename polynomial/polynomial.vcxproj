@@ -119,11 +119,13 @@
     <ClInclude Include="DatLink.h" />
     <ClInclude Include="HeadRing.h" />
     <ClInclude Include="Monom.h" />
+    <ClInclude Include="TPolinom.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="DatLink.cpp" />
     <ClCompile Include="HeadRing.cpp" />
     <ClCompile Include="Monom.cpp" />
+    <ClCompile Include="TPolinom.cpp" />
     <ClCompile Include="users.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
