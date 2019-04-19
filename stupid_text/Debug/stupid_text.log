@@ -1,0 +1,7 @@
+﻿  main_txt.cpp
+  TTextLink.cpp
+  TTextMem.cpp
+d:\visual studio\stupid_text\stupid_text\ttextmem.h(17): error C2535: TTextMem::~TTextMem(void): функция-член уже определена или объявлена
+  d:\visual studio\stupid_text\stupid_text\ttextmem.h(12): note:  см. объявление "TTextMem::~TTextMem"
+d:\visual studio\stupid_text\stupid_text\ttextmem.cpp(51): warning C4018: <: несоответствие типов со знаком и без знака
+  Создание кода...
