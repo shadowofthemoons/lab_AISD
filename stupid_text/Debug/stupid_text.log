@@ -1,7 +1,8 @@
-﻿  main_txt.cpp
-  TTextLink.cpp
-  TTextMem.cpp
-d:\visual studio\stupid_text\stupid_text\ttextmem.h(17): error C2535: TTextMem::~TTextMem(void): функция-член уже определена или объявлена
-  d:\visual studio\stupid_text\stupid_text\ttextmem.h(12): note:  см. объявление "TTextMem::~TTextMem"
-d:\visual studio\stupid_text\stupid_text\ttextmem.cpp(51): warning C4018: <: несоответствие типов со знаком и без знака
-  Создание кода...
+﻿  TText.cpp
+G:\учеба\visual studio\stupid_text\stupid_text\TText.cpp(6,43): warning C4291:  void *TTextLink::operator new(size_t,TTextMem *): не найден соответствующий оператор удаления; если при инициализации возникнет исключение, память не будет освобождена
+G:\учеба\visual studio\stupid_text\stupid_text\TTextMem.h(38): message :   см. объявление "TTextLink::operator new"
+G:\учеба\visual studio\stupid_text\stupid_text\TText.cpp(18,39): warning C4291:  void *TTextLink::operator new(size_t,TTextMem *): не найден соответствующий оператор удаления; если при инициализации возникнет исключение, память не будет освобождена
+G:\учеба\visual studio\stupid_text\stupid_text\TTextMem.h(38): message :   см. объявление "TTextLink::operator new"
+G:\учеба\visual studio\stupid_text\stupid_text\TText.cpp(26,41): warning C4291:  void *TTextLink::operator new(size_t,TTextMem *): не найден соответствующий оператор удаления; если при инициализации возникнет исключение, память не будет освобождена
+G:\учеба\visual studio\stupid_text\stupid_text\TTextMem.h(38): message :   см. объявление "TTextLink::operator new"
+  stupid_text.vcxproj -> G:\учеба\visual studio\stupid_text\Debug\stupid_text.exe

@@ -1,42 +1,39 @@
 #pragma once
-class TText 
+#include "TTextMem.h"
+#include "TTextLink.h"
+#include<sstream>
+#include<fstream>
+class TText
 {
 protected:
-	/*PTTextLink pFirst; // указатель корня дерева
-	PTTextLink pCurrent; // указатель текущей строки
-	stack< PTTextLink > Path; // стек траектории движения по тексту
-	stack< PTTextLink > St; // стек для итератора
-	PTTextLink GetFirstAtom(PTTextLink pl); // поиск первого атома
-	void PrintText(PTTextLink ptl); // печать текста со звена ptl
-	PTTextLink ReadText(ifstream &TxtFile); //чтение текста из файла*/
+	TTextLink* First; // указатель корня дерева
+	TTextLink* Current; // указатель текущей строки
+	stack< TTextLink* > St;
+	TTextMem* mem;
+
 public:
-	/*TText(PTTextLink pl = NULL);
-	~TText() { pFirst = NULL; }
-	PTText getCopy();
-	// навигация
-	int GoFirstLink(void); // переход к первой строке
-	int GoDownLink(void); // переход к следующей строке по Down
-	int GoNextLink(void); // переход к следующей строке по Next
-	int GoPrevLink(void); // переход к предыдущей позиции в тексте
-	// доступ
-	string GetLine(void); // чтение текущей строки
-	void SetLine(string s); // замена текущей строки
-	// модификация
-	void InsDownLine(string s); // вставка строки в подуровень
-	void InsDownSection(string s); // вставка раздела в подуровень
-	void InsNextLine(string s); // вставка строки в том же уровне
-	void InsNextSection(string s); // вставка раздела в том же уровне
-	void DelDownLine(void); // удаление строки в подуровне
-	void DelDownSection(void); // удаление раздела в подуровне
+	TText(const char* line);
+	~TText();
+	//добавление строк
+	void InsDownLine(const char* s); // вставка строки в подуровень
+	void InsNextLine(const char* s); // вставка строки в том же уровне
+	//навигация
+	void GoFirstLink(void); // переход к первой строке
+	void GoDownLink(void); // переход к следующей строке по Down
+	void GoNextLink(void); // переход к следующей строке по Next
+	void GoPrevLink(void); // переход к предыдущей позиции в тексте
+	void Reset(); // установить на первую звапись
+	//удвление
 	void DelNextLine(void); // удаление строки в том же уровне
-	void DelNextSection(void); // удаление раздела в том же уровне
-	// итератор
-	int Reset(void); // установить на первую звапись
-	int IsTextEnded(void) const; // текст завершен?
-	int GoNext(void); // переход к следующей записи
-	//работа с файлами
-	void Read(char * pFileName); // ввод текста из файла
-	void Write(char * pFileName); // вывод текста в файл
-	//печать
-	void Print(void); // печать текста*/
-};
+	void DelDownLine(void); // удаление строки в подуровне
+	//работа с памятью
+	void MemCleaner();
+	void PrintFreeLink();
+	void PrintLink();
+	void Print(void); // печать текста
+	void Save(const char* filename);
+	void load(const char* fileName); // ввод текста из файла
+	//замена чтение строк
+	void SetLine(const char* s); // замена текущей строки
+	string GetLine(void); // чтение текущей строки
+};

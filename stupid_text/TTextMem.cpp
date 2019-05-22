@@ -1,53 +1,11 @@
 #include "TTextMem.h"
-/*
-void MemManager::PrintMem() {
-	bool* IsInFree = new bool[size];
-	for (int i = 0; i < size; i++) {
-		IsInFree[i] = false;
-	}
-	TextNode* curr = free;
-	while (curr != nullptr) {
-		IsInFree[(int)(curr - mem)] = true;
-		curr = curr->next;
-	}
-	int free_in_row = 0;
-	for (int i = 0; i < size; i++) {
-		if (!(free_in_row >= 5 && IsInFree[i]))
-			cout << "#" << i << "#  ";
-		if (IsInFree[i]) {
-			if (free == &mem[i] && free_in_row < 5)
-				cout << "-> ";
-			if (free_in_row < 5) {
-				cout << "free" << ";  next: " << (mem[i].next - mem);
-			}
-			else if (free_in_row == 5) {
-				cout << "\n***\n***\n***" << endl;
-			}
-			free_in_row++;
-		}
-		else if (mem[i].IsDeleted) {
-			cout << "deleted";
-			free_in_row = 0;
-		}
-		else {
-			cout << "value: " << mem[i].value << ";  next: " << (mem[i].next - mem) << ";   down: " << (mem[i].down - mem);
-			free_in_row = 0;
-		}
-		if (!(free_in_row >= 5 && IsInFree[i]))
-			cout << endl;
-	}
-	delete[] IsInFree;
-}
-MemManager::~MemManager() {
-	delete[] mem;
-}*/
 
-TTextMem::TTextMem(unsigned long int size)
+TTextMem::TTextMem(int size)
 {
 	this->size = size;
-	first = new TTextLink [size];
+	first = new TTextLink[size];
 	free = first;
-	last = &first [size - 1];
+    last = &first[size - 1];
 	for (int i = 0; i < size - 1; i++) {
 		first[i].next = &first[i + 1];
 		first[i].down = nullptr;
@@ -60,11 +18,16 @@ TTextMem::TTextMem(unsigned long int size)
 	last->flag = false;
 }
 
-TTextLink* TTextMem::GetNewNode() {
+TTextMem::~TTextMem()
+{
+	delete []first;
+}
+
+TTextLink* TTextMem::GetNewLink()
+{
 	TTextLink* res = free;
-	if (res == nullptr) 
-	{
-		throw 2;
+	if (res == nullptr) {
+		throw -1;
 	}
 	free = free->next;
 	res->next = nullptr;
@@ -73,41 +36,109 @@ TTextLink* TTextMem::GetNewNode() {
 	res->flag = false;
 	return res;
 }
-void TTextMem:: ReturnNode(TTextLink* node)
-{
-	node->next = free;
-	node->down = nullptr;
-	node->line[0] = 0;
-	node->flag = false;
-	free = node;
-}
-void TTextMem::CollectGarbage()
-{
 
+void TTextMem::ReturnLink(TTextLink* link)
+{
+	link->next = free;
+	link->down = nullptr;
+	link->line[0] = '\0';
+	link->flag = false;
+	free = link;
+}
+
+void TTextMem::MemCleaner()
+{
 	stack<TTextLink*> garbage;
-	for (int i=0;i<size;i++)
+	for (TTextLink* i = first; i != first + size; i++) 
 	{
-		if (first[i].flag)
+		if (i->flag)
 		{
-			first[i].next = nullptr;
-			garbage.push(&first[i]);
+			i->next = nullptr;
+			garbage.push(i);
 		}
 	}
 	garbage;
-	while (!garbage.empty()) {
-		TTextLink* node = garbage.top();
+	while (!garbage.empty())
+	{
+		TTextLink* link = garbage.top();
 		garbage.pop();
-		if (node->next != nullptr) {
-			garbage.push(node->next);
+		if (link->next != nullptr) {
+			garbage.push(link->next);
 		}
-		if (node->down != nullptr) {
-			garbage.push(node->down);
+		if (link->down != nullptr) {
+			garbage.push(link->down);
 		}
-		ReturnNode(node);
+		ReturnLink(link);
 	}
+
+
 }
 
-TTextMem::~TTextMem()
+void TTextMem::PrintLink()
 {
-	delete[] first;
+	bool* IsInFree = new bool[size];
+	for (int i = 0; i < size; i++) {
+		IsInFree[i] = false;
+	}
+	TTextLink* curr = free;
+	while (curr != nullptr) {
+		IsInFree[(int)(curr - first)] = true;
+		curr = curr->next;
+	}
+	cout << "Звенья "<<endl;
+	int free_in_row = 0;
+	for (int i = 0; i < size; i++) {
+		if (!(free_in_row >= 10 && IsInFree[i]))
+			cout << i <<"  ";
+		if (IsInFree[i]) {
+			if (free == &first[i] && free_in_row < 10)
+				cout << "Первое ";
+			if (free_in_row < 10) {
+				cout << "Свободное; Следующее свободное " << (first[i].next - first);
+			}
+			else if (free_in_row == 10) {
+				cout << "\n***\n***\n***" << endl;
+			}
+			free_in_row++;
+		}
+		else if (first[i].flag) {
+			cout << "Удаленное";
+			free_in_row = 0;
+		}
+		else {
+			cout << "value: " << first[i].line << ";  next: ";
+			if (first[i].next - first < 0)
+			{
+				cout << "nullptr";
+			}
+			else
+			{
+				cout << first[i].next - first;
+			}
+			cout << ";   down: ";
+			if (first[i].down - first < 0)
+			{
+				cout << "nullptr";
+			}
+			else
+			{
+				cout << first[i].down - first;
+			}
+			free_in_row = 0;
+		}
+		if (!(free_in_row >= 10 && IsInFree[i]))
+			cout << endl;
+	}
+	delete[] IsInFree;
+}
+
+void TTextMem::PrintFreeLink()
+{
+	TTextLink* curr = free;
+	cout << "Свободные звенья"<<endl;
+	while (curr != nullptr)
+	{
+		cout << '#' << int(curr - first) << '#' << endl;
+		curr = curr->next;
+	}
 }

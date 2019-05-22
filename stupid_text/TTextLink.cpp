@@ -1,25 +1,9 @@
 #include "TTextLink.h"
+#include "TTextMem.h"
 
-
-
-TTextLink * TTextLink::GetNext()
+TTextLink::TTextLink(const char* s, TTextLink* pn, TTextLink* pd)
 {
-	return next;
-}
-
-TTextLink * TTextLink::GetDown()
-{
-	return down;
-}
-
-int TTextLink::IsAtom()
-{
-	return down == nullptr;
-}
-
-TTextLink::TTextLink(char * s, TTextLink* pn, TTextLink* pd)
-{
-	next = pn; 
+	next = pn;
 	down = pd;
 	if (s != NULL)
 	{
@@ -28,18 +12,33 @@ TTextLink::TTextLink(char * s, TTextLink* pn, TTextLink* pd)
 	else line[0] = '\0';
 }
 
-
-
-
-/*
-void TTextLink::print()
+TTextLink * TTextLink::GetNext()
 {
-	cout << down << endl;
-	cout << next << endl;
-	for (int i=0;line[i]!='\0';i++)
-	{
-		cout << line[i];
-	}
-	cout <<"    111"<< endl;
+	return next;
+}
+TTextLink * TTextLink::GetDown()
+{
+	return down;
+}
 
-}*/
+void TTextLink::setline(const char* str)
+{
+	strcpy_s(line, str);
+}
+
+int TTextLink::IsAtom()
+{
+	return down == nullptr;
+}
+ 
+void * TTextLink::operator new(size_t size, TTextMem * mem)
+{
+	TTextLink* res = mem->GetNewLink();
+	return res;
+}
+
+void TTextLink::operator delete(void* p)
+{
+	TTextLink* link = (TTextLink*)p;
+	link->flag = true;
+}
